@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     String [] ignoredPaths = new String[]{
-            "/api/users","/api/userDetails","/oauth/token", "/oauth/authorize"
+            "/api/users","/api/userDetails"
     };
 
     @Override
@@ -19,7 +19,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
             .antMatchers(ignoredPaths).permitAll()
             .anyRequest().authenticated()
-        .and()
+            .and()
             .httpBasic();   
     }
 }

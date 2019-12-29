@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.SparkyTS.springRest.entity.Authority;
@@ -20,7 +21,7 @@ public class UserDAOImpl implements UserDAO{
 	@Autowired
 	private EntityManager entityManger;
 	
-//	@Autowired BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired BCryptPasswordEncoder bCryptPasswordEncoder;
 	 
 	
 	@Override
@@ -42,9 +43,7 @@ public class UserDAOImpl implements UserDAO{
 	public User add(User user, Authority authority) throws Exception {
 	
 		Session session = entityManger.unwrap(Session.class);
-//		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-//		user.setPassword(bcrypt.encode(user.getPassword()));
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		
 		session.saveOrUpdate(user);
 		

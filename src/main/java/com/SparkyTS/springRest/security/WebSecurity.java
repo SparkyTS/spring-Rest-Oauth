@@ -27,23 +27,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception { // @formatter:off
-        http
-                .anonymous().and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/oauth/authorize", "/api/users/**", "/api/userDetails").permitAll()
-                .and().authorizeRequests().anyRequest().authenticated()
-                .and()
-        		.httpBasic()
-        		.and()
-        		.csrf().disable();
+    protected void configure(HttpSecurity http) throws Exception {
+    	http.anonymous().and()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET,"/oauth/authorize", "/api/users/**", "/api/userDetails").permitAll()
+            .and()
+            .authorizeRequests().anyRequest().authenticated()	
+            .and()
+        	.httpBasic()
+        	.and()
+        	.csrf().disable();
 //        		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated();
-//        http.csrf().disable();
-//        http.cors().disable();
     }
 
     @Override
@@ -60,18 +54,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         	.usersByUsernameQuery("select username,password, status from user where username=?")
         	.authoritiesByUsernameQuery(
 				"SELECT u.username as username, a.role AS role FROM user u INNER JOIN user_authorities uaj ON uaj.user_id = u.id INNER JOIN authorities a ON a.id = uaj.authority_id where u.username=?");
-        
+
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @SuppressWarnings("deprecation")
-//    @Bean
-//    public NoOpPasswordEncoder passwordEncoder() {
-//        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-//    }
 }
 

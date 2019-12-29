@@ -34,8 +34,8 @@ public class OAuthenticationConfiguration extends AuthorizationServerConfigurerA
 
     @Override
     public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.tokenKeyAccess("permitAll()")
-                .checkTokenAccess("isAuthenticated()");
+    	oauthServer.tokenKeyAccess("permitAll()")
+                   .checkTokenAccess("isAuthenticated()");
     }
 
     @Bean
@@ -48,10 +48,8 @@ public class OAuthenticationConfiguration extends AuthorizationServerConfigurerA
         return tokenServices;
     }
 
-
     @Override
     public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-
         clients.inMemory()
                 .withClient("my-trusted-client")
                 .secret(passwordEncoder.encode("secret"))
@@ -66,9 +64,7 @@ public class OAuthenticationConfiguration extends AuthorizationServerConfigurerA
     }
 
     @Override
-    public void configure(
-            AuthorizationServerEndpointsConfigurer endpoints) {
-
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.authenticationManager(authenticationManager)
                 .tokenServices(resourceServerTokenServices())
                 .accessTokenConverter(accessTokenConverter());
