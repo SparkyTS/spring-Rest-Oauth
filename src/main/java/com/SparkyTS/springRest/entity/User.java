@@ -24,6 +24,9 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
+	@Column(name="email")
+	private String email;
+	
 	@Column(name="status")
 	private Boolean enabled;
 	
@@ -83,10 +86,18 @@ public class User {
 		this.updatedOn = updatedOn;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", createdOn=" + createdOn + ", updatedOn=" + updatedOn +"]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", enabled=" + enabled + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
 	}
 	
 }

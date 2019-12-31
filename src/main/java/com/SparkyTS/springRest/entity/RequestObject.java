@@ -7,6 +7,7 @@ public class RequestObject {
 	private int id;
 	private String username;
 	private String password;
+	private String email;
 	private boolean enabled;
 	private Timestamp createdOn;
 	private Timestamp updatedOn;
@@ -54,21 +55,30 @@ public class RequestObject {
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 	public User getUser() {
 		User user = new User();
 		user.setId(id);
 		user.setUsername(username);
 		user.setPassword(password);
+		user.setEmail(email);
 		user.setEnabled(enabled);
 		user.setCreatedOn(createdOn);
 		user.setUpdatedOn(updatedOn);
 		return user;
 	}
+	
 	@Override
 	public String toString() {
-		return "RequestObject [username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + ", authority=" + authority + "]";
+		return "RequestObject [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", enabled=" + enabled + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + ", authority="
+				+ authority + "]";
 	}
 	
 }

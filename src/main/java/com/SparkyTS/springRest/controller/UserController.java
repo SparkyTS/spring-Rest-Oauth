@@ -3,6 +3,9 @@ package com.SparkyTS.springRest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SparkyTS.springRest.dao.UserDAO;
@@ -36,6 +40,15 @@ public class UserController {
 	@GetMapping("/users/{id}")
 	public User getUser(@PathVariable int id){
 		return userDAO.find(id);
+	}
+	
+	@GetMapping("users/resetPass")
+	public ResponseEntity<String> handleResetPassRequest(@RequestParam String email) {
+		 final String SUCCESS = "{\"message\":\"reset link has been sent successfully\",\"type\":\"success\"}";
+		 final String FAIL = "{\"message\":\"email doesn't exist\",\"type\":\"error\"}";
+		 
+		System.out.println("Received Password reset request for " + email);
+		return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping("/users")
@@ -65,4 +78,5 @@ public class UserController {
 		
 		return user;
 	}
+
 }
