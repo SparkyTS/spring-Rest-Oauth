@@ -2,6 +2,8 @@ package com.SparkyTS.springRest.controller;
 
 import java.util.List;
 
+import com.SparkyTS.springRest.dao.ForgotPasswordDAO;
+import com.SparkyTS.springRest.entity.ForgotPasswordReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,9 @@ public class UserController {
 	
 	@Autowired
 	private UserDAO userDAO;
-	
+
+	@Autowired
+	private ForgotPasswordDAO forgotPasswordDAO;
 	
 	@GetMapping("/users")
 	public List<User> getUsers(){
@@ -42,13 +46,36 @@ public class UserController {
 		return userDAO.find(id);
 	}
 	
-	@GetMapping("users/resetPass")
-	public ResponseEntity<String> handleResetPassRequest(@RequestParam String email) {
+	@GetMapping("/users/forgotPassword")
+	public ResponseEntity<String> handleForgotPasswordRequest(@RequestParam String email) {
 		 final String SUCCESS = "{\"message\":\"reset link has been sent successfully\",\"type\":\"success\"}";
 		 final String FAIL = "{\"message\":\"email doesn't exist\",\"type\":\"error\"}";
 		 
 		System.out.println("Received Password reset request for " + email);
-		return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+
+		boolean verified = forgotPasswordDAO.verifyUser(email);
+		boolean success = false;
+
+		if(verified)
+			success = forgotPasswordDAO.GenerateAndSendToken(email);
+
+		return verified&&success ? new ResponseEntity<String>(SUCCESS, HttpStatus.OK): new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+	}
+
+	@PostMapping("/users/resetPassword")
+	public ResponseEntity<String> handleResetPasswordRequest(@RequestBody ForgotPasswordReq obj){
+		final String SUCCESS = "{\"message\":\"Password has been reset successfully\",\"type\":\"success\"}";
+		final String FAIL = "{\"message\":\"error in resetting password\",\"type\":\"error\"}";
+		System.out.println("Hello : ");
+		String password = obj.getNewPassword();
+		String token = obj.getToken();
+		try{
+			forgotPasswordDAO.setNewPassword(token,password);
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>(FAIL, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@PostMapping("/users")

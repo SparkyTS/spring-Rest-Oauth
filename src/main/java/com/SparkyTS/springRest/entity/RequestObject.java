@@ -61,7 +61,7 @@ public class RequestObject {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public User getUser() {
 		User user = new User();
 		user.setId(id);
