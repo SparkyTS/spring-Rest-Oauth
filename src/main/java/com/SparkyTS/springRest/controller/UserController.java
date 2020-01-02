@@ -1,29 +1,18 @@
 package com.SparkyTS.springRest.controller;
 
-import java.util.List;
-
 import com.SparkyTS.springRest.dao.ForgotPasswordDAO;
+import com.SparkyTS.springRest.dao.UserDAO;
+import com.SparkyTS.springRest.entity.Authority;
 import com.SparkyTS.springRest.entity.ForgotPasswordReq;
+import com.SparkyTS.springRest.entity.RequestObject;
+import com.SparkyTS.springRest.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.SparkyTS.springRest.dao.UserDAO;
-import com.SparkyTS.springRest.entity.Authority;
-import com.SparkyTS.springRest.entity.RequestObject;
-import com.SparkyTS.springRest.entity.User;
+import java.util.List;
 
 @RestController
 @EnableResourceServer
@@ -68,7 +57,6 @@ public class UserController {
 	public ResponseEntity<String> handleResetPasswordRequest(@RequestBody ForgotPasswordReq obj){
 		final String SUCCESS = "{\"message\":\"Password has been reset successfully\",\"type\":\"success\"}";
 		final String FAIL = "{\"message\":\"error in resetting password\",\"type\":\"error\"}";
-		System.out.println("Hello : ");
 		String password = obj.getNewPassword();
 		String token = obj.getToken();
 		try{

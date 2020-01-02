@@ -1,7 +1,5 @@
 package com.SparkyTS.springRest.entity;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
