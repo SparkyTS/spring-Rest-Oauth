@@ -30,9 +30,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	http.anonymous().and()
             .authorizeRequests()
-            .antMatchers(HttpMethod.GET,"/oauth/authorize", "/api/users/**", "/api/userDetails").permitAll()
+                .antMatchers(HttpMethod.GET,"/oauth/authorize","/api/users").permitAll()
             .and()
-            .authorizeRequests().anyRequest().authenticated()	
+            .authorizeRequests().anyRequest().authenticated()
             .and()
         	.httpBasic()
         	.and()

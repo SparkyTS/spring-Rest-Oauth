@@ -24,10 +24,10 @@ public class OAuthenticationConfiguration extends AuthorizationServerConfigurerA
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-    @Bean
-    public AuthenticationTokenConverter accessTokenConverter() {
-        return new AuthenticationTokenConverter();
-    }
+//    @Bean
+//    public AuthenticationTokenConverter accessTokenConverter() {
+//        return new AuthenticationTokenConverter();
+//    }
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -44,7 +44,7 @@ public class OAuthenticationConfiguration extends AuthorizationServerConfigurerA
         DefaultTokenServices tokenServices = new DefaultTokenServices();
         tokenServices.setSupportRefreshToken(true);
         tokenServices.setTokenStore(tokenStore());
-        tokenServices.setTokenEnhancer(accessTokenConverter());
+//        tokenServices.setTokenEnhancer(accessTokenConverter());
         return tokenServices;
     }
 
@@ -53,7 +53,7 @@ public class OAuthenticationConfiguration extends AuthorizationServerConfigurerA
         clients.inMemory()
                 .withClient("my-trusted-client")
                 .secret(passwordEncoder.encode("secret"))
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token","client_credentials")
                 .scopes("read")
                 .autoApprove(true);
     }
@@ -66,7 +66,7 @@ public class OAuthenticationConfiguration extends AuthorizationServerConfigurerA
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints.authenticationManager(authenticationManager)
-                .tokenServices(resourceServerTokenServices())
-                .accessTokenConverter(accessTokenConverter());
+                .tokenServices(resourceServerTokenServices());
+//                .accessTokenConverter(accessTokenConverter());
     }
 }

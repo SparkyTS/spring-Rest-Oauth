@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     String [] ignoredPaths = new String[]{
-            "/api/users","/api/userDetails","/api/users/forgotPassword","/api/users/resetPassword"
+//            "/api/users/resetPassword"//completely public links should be added here
     };
 
     @Override

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import com.SparkyTS.springRest.entity.RequestObject;
 import com.SparkyTS.springRest.entity.User;
 
 @RestController
+@EnableResourceServer
 @RequestMapping("/api")
 @CrossOrigin(origins="http://localhost:4200")
 public class UserController {
